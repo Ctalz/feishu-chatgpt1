@@ -392,6 +392,7 @@ func replyMsg(ctx context.Context, msg string, msgId *string) error {
 			MsgType(larkim.MsgTypeText).
 			Uuid(uuid.New().String()).
 			Content(content).
+		        Tag("lark_md"). // 将tag字段声明为lark_md
 			Build()).
 		Build())
 
