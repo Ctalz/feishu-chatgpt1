@@ -282,6 +282,7 @@ func (*PlayRoleAction) Execute(a *ActionInfo) bool {
 	}
 	return true
 	}
+	return true
 }
 
 
