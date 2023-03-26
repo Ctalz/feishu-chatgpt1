@@ -307,6 +307,30 @@ func withPicModeDoubleCheckBtn(sessionID *string) larkcard.
 
 	return actions
 }
+func PlayroleBtn(sessionID *string) larkcard.
+	MessageCardElement {
+	OpA_Btn := newBtn("选项A", map[string]interface{}{
+		"value":     "1",
+		"kind":      PicModeChangeKind,
+		"chatType":  UserChatType,
+		"sessionId": *sessionID,
+	}, larkcard.MessageCardButtonTypeDanger,
+	)
+	OpB_Btn := newBtn("选项B", map[string]interface{}{
+		"value":     "0",
+		"kind":      PicModeChangeKind,
+		"sessionId": *sessionID,
+		"chatType":  UserChatType,
+	},
+		larkcard.MessageCardButtonTypeDefault)
+
+	actions := larkcard.NewMessageCardAction().
+		Actions([]larkcard.MessageCardActionElement{OpA_Btn, OpB_Btn}).
+		Layout(larkcard.MessageCardActionLayoutBisected.Ptr()).
+		Build()
+
+	return actions
+}
 
 func withOneBtn(btn *larkcard.MessageCardEmbedButton) larkcard.
 	MessageCardElement {
@@ -384,6 +408,8 @@ func replyMsg(ctx context.Context, msg string, msgId *string) error {
 	}
 	return nil
 }
+
+
 
 func uploadImage(base64Str string) (*string, error) {
 	imageBytes, err := base64.StdEncoding.DecodeString(base64Str)
@@ -589,7 +615,7 @@ func sendPicModeCheckCard(ctx context.Context,
 func sendNewTopicCard(ctx context.Context,
 	sessionId *string, msgId *string, content string) {
 	newCard, _ := newSendCard(
-		withHeader("👻️ 已开启新的话题", larkcard.TemplateBlue),
+		withHeader("👻️ 故事继续...", larkcard.TemplateBlue),
 		withMainText(content),
 		withNote("提醒：点击对话框参与回复，可保持话题连贯"))
 	replyCard(
@@ -598,7 +624,19 @@ func sendNewTopicCard(ctx context.Context,
 		newCard,
 	)
 }
-
+func sendPlayroleCard(ctx context.Context,
+	sessionId *string, msgId *string, content string) {
+	newCard, _ := newSendCard(
+		withHeader("👻️ 已开启新的话题", larkcard.TemplateBlue),
+		withMainText(content),
+		PlayroleBtn(sessionId),
+		withNote("提醒：点击对话框参与回复，可保持话题连贯"))
+	replyCard(
+		ctx,
+		msgId,
+		newCard,
+	)
+}
 func sendHelpCard(ctx context.Context,
 	sessionId *string, msgId *string) {
 	newCard, _ := newSendCard(
