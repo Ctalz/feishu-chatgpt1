@@ -385,7 +385,6 @@ func replyMsg(ctx context.Context, msg string, msgId *string) error {
 	client := initialization.GetLarkClient()
 	content := larkim.NewTextMsgBuilder().
 		Text(msg).
-	        Tag("lark_md").
 		Build()
 
 	resp, err := client.Im.Message.Reply(ctx, larkim.NewReplyMessageReqBuilder().
