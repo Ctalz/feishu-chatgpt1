@@ -32,6 +32,7 @@ const (
 	ModePicCreate SessionMode = "pic_create"
 	ModePicVary   SessionMode = "pic_vary"
 	ModeGPT       SessionMode = "gpt"
+	ModePlayRole  SessionMode = "playrole"
 )
 
 type SessionServiceCacheInterface interface {
