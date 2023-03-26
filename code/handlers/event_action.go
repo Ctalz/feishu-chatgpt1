@@ -102,10 +102,12 @@ func (*RolePlayAction) Execute(a *ActionInfo) bool {
 		a.handler.sessionCache.SetMsg(*a.info.sessionId, systemMsg)
 		sendSystemInstructionCard(*a.ctx, a.info.sessionId,
 			a.info.msgId, system)
-		return false
+		return true
 	}
 	return true
 }
+
+
 
 type HelpAction struct { /*帮助*/
 }
@@ -114,6 +116,17 @@ func (*HelpAction) Execute(a *ActionInfo) bool {
 	if _, foundHelp := utils.EitherTrimEqual(a.info.qParsed, "/help",
 		"帮助"); foundHelp {
 		sendHelpCard(*a.ctx, a.info.sessionId, a.info.msgId)
+		return false
+	}
+	return true
+}
+
+func (*PlayAction) Execute(a *ActionInfo) bool {
+	if _, foundHelp := utils.EitherTrimEqual(a.info.qParsed, "/play",
+		"跑团"); foundHelp {
+			a.handler.sessionCache.Clear(*a.info.sessionId)
+			a.handler.sessionCache.SetMode(*a.info.sessionId,
+				services.ModePlayRole)
 		return false
 	}
 	return true
@@ -238,6 +251,36 @@ func (*MessageAction) Execute(a *ActionInfo) bool {
 	}
 	return true
 }
+
+type PlayRoleAction struct { /*消息*/
+}
+
+func (*PlayRoleAction) Execute(a *ActionInfo) bool {
+	if mode == services.ModePlayRole {
+	msg := a.handler.sessionCache.GetMsg(*a.info.sessionId)
+	msg = append(msg, openai.Messages{
+		Role: "user", Content: a.info.qParsed,
+	})
+	completions, err := a.handler.gpt.Completions(msg)
+	if err != nil {
+		replyMsg(*a.ctx, fmt.Sprintf(
+			"🤖️：消息机器人摆烂了，请稍后再试～\n错误信息: %v", err), a.info.msgId)
+		return false
+	}
+	msg = append(msg, completions)
+	a.handler.sessionCache.SetMsg(*a.info.sessionId, msg)
+	//if new topic
+	sendPlayroleCard(*a.ctx, a.info.sessionId, a.info.msgId,
+			completions.Content)
+	if err != nil {
+		replyMsg(*a.ctx, fmt.Sprintf(
+			"🤖️：消息机器人摆烂了，请稍后再试～\n错误信息: %v", err), a.info.msgId)
+		return false
+	}
+	return true
+	}
+}
+
 
 type AudioAction struct { /*语音*/
 }
