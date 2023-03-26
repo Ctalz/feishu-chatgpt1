@@ -56,7 +56,7 @@ func (*ProcessMentionAction) Execute(a *ActionInfo) bool {
 	// 群聊判断是否提到机器人
 	if a.info.handlerType == GroupHandler {
 		if a.handler.judgeIfMentionMe(a.info.mention) {
-			return false
+			return true
 		}
 		return false
 	}
