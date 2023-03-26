@@ -121,6 +121,8 @@ func (*HelpAction) Execute(a *ActionInfo) bool {
 	return true
 }
 
+type PlayAction struct { /*跑团*/
+}
 func (*PlayAction) Execute(a *ActionInfo) bool {
 	if _, foundHelp := utils.EitherTrimEqual(a.info.qParsed, "/play",
 		"跑团"); foundHelp {
