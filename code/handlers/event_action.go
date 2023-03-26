@@ -258,6 +258,7 @@ type PlayRoleAction struct { /*消息*/
 }
 
 func (*PlayRoleAction) Execute(a *ActionInfo) bool {
+	mode := a.handler.sessionCache.GetMode(*a.info.sessionId)
 	if mode == services.ModePlayRole {
 	msg := a.handler.sessionCache.GetMsg(*a.info.sessionId)
 	msg = append(msg, openai.Messages{
