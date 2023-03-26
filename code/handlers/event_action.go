@@ -254,7 +254,7 @@ func (*MessageAction) Execute(a *ActionInfo) bool {
 	return true
 }
 
-type PlayRoleAction struct { /*消息*/
+type PlayRoleAction struct { /*跑团*/
 }
 
 func (*PlayRoleAction) Execute(a *ActionInfo) bool {
@@ -280,7 +280,7 @@ func (*PlayRoleAction) Execute(a *ActionInfo) bool {
 			"🤖️：消息机器人摆烂了，请稍后再试～\n错误信息: %v", err), a.info.msgId)
 		return false
 	}
-	return true
+	return false
 	}
 	return true
 }
