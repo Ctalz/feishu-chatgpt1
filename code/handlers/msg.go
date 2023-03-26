@@ -378,13 +378,13 @@ func withPicResolutionBtn(sessionID *string) larkcard.
 func replyMsg(ctx context.Context, msg string, msgId *string) error {
 	fmt.Println("sendMsg", msg, msgId)
 	msg, i := processMessage(msg)
+	msg = fmt.Sprintf(`{"text": {"content": "%s", "tag": "plain_text"}}`, msg)
 	if i != nil {
 		return i
 	}
 	client := initialization.GetLarkClient()
 	content := larkim.NewTextMsgBuilder().
 		Text(msg).
-	        Tag("lark_md"). // 将tag字段声明为lark_md
 		Build()
 
 	resp, err := client.Im.Message.Reply(ctx, larkim.NewReplyMessageReqBuilder().
