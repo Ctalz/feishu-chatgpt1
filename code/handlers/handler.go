@@ -205,6 +205,8 @@ func (m MessageHandler) msgReceivedHandler(ctx context.Context, event *larkim.P2
 		&ClearAction{},           //清除消息处理
 		&HelpAction{},            //帮助处理
 		&RolePlayAction{},        //角色扮演处理
+		&PlayAction{},
+		&PlayRoleAction{},
 		&MessageAction{},         //消息处理
 
 	}
