@@ -378,7 +378,7 @@ func withPicResolutionBtn(sessionID *string) larkcard.
 func replyMsg(ctx context.Context, msg string, msgId *string) error {
 	fmt.Println("sendMsg", msg, msgId)
 	msg, i := processMessage(msg)
-	msg = fmt.Sprintf(`{"text": {"content": "%s", "tag": "lark_md"}}`, msg)
+// 	msg = fmt.Sprintf(`{"text": {"content": "%s", "tag": "lark_md"}}`, msg)
 	if i != nil {
 		return i
 	}
