@@ -615,7 +615,7 @@ func sendPicModeCheckCard(ctx context.Context,
 func sendNewTopicCard(ctx context.Context,
 	sessionId *string, msgId *string, content string) {
 	newCard, _ := newSendCard(
-		withHeader("👻️ 故事继续...", larkcard.TemplateBlue),
+		withHeader("👻️ 已开启新的话题", larkcard.TemplateBlue),
 		withMainText(content),
 		withNote("提醒：点击对话框参与回复，可保持话题连贯"))
 	replyCard(
@@ -627,7 +627,7 @@ func sendNewTopicCard(ctx context.Context,
 func sendPlayroleCard(ctx context.Context,
 	sessionId *string, msgId *string, content string) {
 	newCard, _ := newSendCard(
-		withHeader("👻️ 已开启新的话题", larkcard.TemplateBlue),
+		withHeader("👻️ 故事继续...", larkcard.TemplateBlue),
 		withMainText(content),
 		PlayroleBtn(sessionId),
 		withNote("提醒：点击对话框参与回复，可保持话题连贯"))
